@@ -6,5 +6,5 @@ setup(name='hangul-utils',
       author='Kang Min Yoo',
       author_email='kaniblurous@gmail.com',
       url='https://github.com/kaniblu/hangul-utils',
-      packages=['hangul'],
+      packages=['hangul_utils'],
      )

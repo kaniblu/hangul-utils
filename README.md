@@ -19,6 +19,7 @@ The library provides two basic functionalities.
  
 ## Examples
 
+    >>> from hangul import split_syllable_char, split_syllables, join_jamos
     >>> print(split_syllable_char(u"안"))
     ('ㅇ', 'ㅏ', 'ㄴ')
     
