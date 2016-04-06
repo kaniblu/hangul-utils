@@ -57,7 +57,7 @@ def jamo_type(x):
 
     return t
 
-def split_char(x):
+def split_syllable_char(x):
     """
     Splits a given korean character into components.
     :param x: A complete korean character.
@@ -84,7 +84,7 @@ def split_char(x):
 
     return result
 
-def join_char(initial, medial, final=None):
+def join_jamos_char(initial, medial, final=None):
     """
     Combines jamos to produce a single syllable.
     :param initial: initial jamo.
@@ -107,7 +107,7 @@ def join_char(initial, medial, final=None):
 
     return result
 
-def split_str(string):
+def split_syllables(string):
     """
     Splits a sequence of Korean syllables to produce a sequence of jamos.
     Irrelevant characters will be ignored.
@@ -119,12 +119,12 @@ def split_str(string):
         if not check_syllable(c):
             new_c = c
         else:
-            new_c = "".join(split_char(c))
+            new_c = "".join(split_syllable_char(c))
         new_string += new_c
 
     return new_string
 
-def join_str(string):
+def join_jamos(string):
     """
     Combines a sequence of jamos to produce a sequence of syllables.
     Irrelevant characters will be ignored.
@@ -144,7 +144,7 @@ def join_str(string):
         if len(new_queue) == 1:
             result = new_queue[0]
         elif len(new_queue) >= 2:
-            result = join_char(*new_queue)
+            result = join_jamos_char(*new_queue)
         else:
             result = None
 
@@ -185,10 +185,17 @@ def join_str(string):
     return new_string
 
 def main():
-    print(split_char(u"안"))
-    print(split_str(u"안녕하세요"))
-    print(join_str(split_str(u"앉았다 일었났다 잃을게 없는지 꼭 확인하세요.")))
-    assert join_char(*split_char(u"안")) == u"안"
+    print(split_syllable_char(u"안"))
+    print(split_syllables(u"안녕하세요"))
+    sentence = u"앞 집 팥죽은 붉은 팥 풋팥죽이고, 뒷집 콩죽은 햇콩 단콩 콩죽.우리 집 깨죽은 검은 깨 깨죽인데 사람들은 햇콩 단콩 콩죽 깨죽 죽먹기를 싫어하더라."
+    s = split_syllables(sentence)
+    print(s)
+
+    sentence2 = join_jamos(s)
+    print(sentence2)
+
+    print(sentence == sentence2)
+    assert join_jamos_char(*split_syllable_char(u"안")) == u"안"
 
 
 if __name__ == "__main__":
