@@ -1,4 +1,4 @@
-#encoding; UTF-8
+#encoding: UTF-8
 
 import sys
 import functools
@@ -56,6 +56,7 @@ def jamo_type(x):
             t |= type_code
 
     return t
+
 
 def split_syllable_char(x):
     """
@@ -144,7 +145,11 @@ def join_jamos(string):
         if len(new_queue) == 1:
             result = new_queue[0]
         elif len(new_queue) >= 2:
-            result = join_jamos_char(*new_queue)
+            try:
+                result = join_jamos_char(*new_queue)
+            except ValueError:
+                #Invalid jamo combination
+                result = "".join(new_queue)
         else:
             result = None
 
@@ -184,6 +189,14 @@ def join_jamos(string):
 
     return new_string
 
+def __gen(n):
+    from cStringIO import StringIO
+    import random
+    s = StringIO()
+    for i in range(n):
+        s.write(random.choice(INITIALS + MEDIALS + FINALS).encode("utf8"))
+    return s.getvalue().decode("utf8")
+
 def main():
     print(split_syllable_char(u"안"))
     print(split_syllables(u"안녕하세요"))
@@ -195,6 +208,10 @@ def main():
     print(sentence2)
 
     print(sentence == sentence2)
+
+    for i in range(10):
+        print(join_jamos(__gen(20)))
+
     assert join_jamos_char(*split_syllable_char(u"안")) == u"안"
 
 
