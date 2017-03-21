@@ -2,8 +2,9 @@
 
 A python library for manipulating Korean alphabets
 
-[![Build Status](https://travis-ci.org/kaniblu/hangul-utils.svg?
-branch=master)](https://travis-ci.org/kaniblu/hangul-utils)
+
+[![Build Status](https://travis-ci.org/kaniblu/hangul-utils.svg?branch=master)](https://travis-ci.org/kaniblu/hangul-utils)
+
 
 Hangul is made of basic letters called 'jamo(자모)', and thus it is an
 [agglutinative language](https://en.wikipedia.org/wiki/Agglutinative_language).
