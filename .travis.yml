@@ -9,4 +9,4 @@ python:
   - "3.7-dev"
   - "nightly"
 install: "pip install -r requirements.txt"
-script: pytest
+script: py.test
