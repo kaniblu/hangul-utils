@@ -3,25 +3,21 @@
 A python library for manipulating Korean alphabets
 
 
-[![Build Status](https://travis-ci.org/kaniblu/hangul-utils.svg?branch=master)](https://travis-ci.org/kaniblu/hangul-utils)
+[![Build Status][1]][2]
 
 
 Hangul is made of basic letters called 'jamo(자모)', and thus it is an
-[agglutinative language](https://en.wikipedia.org/wiki/Agglutinative_language).
-As such, a tool for splitting and joining *jamos* could come very handy when
-we want to perform character-level Korean text processing. The method for
-manipulating Korean alphabets at character-level is quite straight-forward,
-as it is apparent from the simple formula for deducing the unicode value of
-an agglutinated character is [quite simple](https://en.wikipedia.org/wiki/
-    Korean_language_and_computers#Hangul_in_Unicode). However, the tricky part
-is when forming a string of Hanguls from a string of raw *jamos*, because some
-of the consonants can be either [initials](https://en.wikipedia.org/wiki/
-    Hangul_consonant_and_vowel_tables#Initials) or
-[finals](https://en.wikipedia.org/wiki/
-    Hangul_consonant_and_vowel_tables#Finals), requiring at least some form of
-backtracking (if you have used Korean input before, you probably know what
-I'm talking about). This simple library is intended to abstract away the
-details and help you do all the dirty work.
+[agglutinative language][3]. As such, a tool for splitting and joining 
+*jamos* could come very handy when we want to perform character-level Korean 
+text processing. The method for manipulating Korean alphabets at character-
+level is quite straight-forward, as it is apparent from the simple formula 
+for deducing the unicode value of an agglutinated character is [quite simple][4]. 
+However, the tricky part is when forming a string of Hanguls from a string 
+of raw *jamos*, because some of the consonants can be either [initials][5] or
+[finals][6], requiring at least some form of backtracking (if you have used 
+Korean input before, you probably know what I'm talking about). This simple 
+library is intended to abstract away the details and help you do all the dirty 
+work.
 
 ## Get Started
 
@@ -61,3 +57,10 @@ The library provides two basic functionalities.
     
     >>> print(sentence == sentence2)
     True
+    
+  [1]: https://travis-ci.org/kaniblu/hangul-utils.svg?branch=master
+  [2]: https://travis-ci.org/kaniblu/hangul-utils
+  [3]: https://en.wikipedia.org/wiki/Agglutinative_language
+  [4]: https://en.wikipedia.org/wiki/Korean_language_and_computers#Hangul_in_Unicode
+  [5]: https://en.wikipedia.org/wiki/Hangul_consonant_and_vowel_tables#Initials
+  [6]: https://en.wikipedia.org/wiki/Hangul_consonant_and_vowel_tables#Finals
