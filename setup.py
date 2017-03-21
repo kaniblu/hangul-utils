@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='hangul-utils',
-      version='0.2',
+      version='0.2.1',
       description='A python library for manipulating Korean alphabets',
       author='Kang Min Yoo',
       author_email='kaniblurous@gmail.com',
