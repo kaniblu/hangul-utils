@@ -8,6 +8,8 @@ python:
   - "3.6-dev"
   - "3.7-dev"
   - "nightly"
+env:
+  - "LD_LIBRARY_PATH=/usr/local/lib:/usr/lib"
 install:
   - sudo bash install_mecab_ko.sh
   - python setup.py install
