@@ -40,6 +40,7 @@ setup(
         "korean character",
     ],
     install_requires=[
+        "six",
         "twkorean>=0.1.5",
         "mecab-python==0.996-ko-0.9.2"
     ],
