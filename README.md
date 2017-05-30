@@ -2,7 +2,7 @@
 
 An integrated library for Korean language preprocessing.
 
-[![Build Status][1]][2]
+<!--[![Build Status][1]][2]-->
 
 This simple library has following features.
 
