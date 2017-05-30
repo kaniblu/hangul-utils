@@ -2,7 +2,7 @@
 
 An integrated library for Korean language preprocessing.
 
-[![Build Status](https://travis-ci.org/kaniblu/hangul-utils.svg?branch=master)](https://travis-ci.org/kaniblu/hangul-utils)
+[![Build Status][1]][2]
 
 This simple library has following features.
 
@@ -161,18 +161,15 @@ Again, these functions are also available as methods of `Preprocessor`.
 ## Manipulating Korean Characters
 
 Hangul is made of basic letters called 'jamo(자모)', and thus it is an
-[agglutinative language](https://en.wikipedia.org/wiki/Agglutinative_language).
+[agglutinative language][3].
 As such, a tool for splitting and joining *jamos* could come very handy when
 we want to perform character-level Korean text processing. Splitting a Korean
 character is quite straight-forward:
 a simple algebraic formula can deduce the unicode value of individual *jamo*
-([Wiki](https://en.wikipedia.org/wiki/
-    Korean_language_and_computers#Hangul_in_Unicode)). However, the tricky part
+([Wiki][4]). However, the tricky part
 is forming a string of Hanguls from a string of *jamos*, because the consonants
-can be either [initials](https://en.wikipedia.org/wiki/
-    Hangul_consonant_and_vowel_tables#Initials) or
-[finals](https://en.wikipedia.org/wiki/
-    Hangul_consonant_and_vowel_tables#Finals), some form of backtracking
+can be either [initials]([5]) or
+[finals]([6]), some form of backtracking
 is require.
 
 ### Functions
@@ -207,3 +204,10 @@ is require.
     
     >>> print(sentence == sentence2)
     True
+    
+  [1]: https://travis-ci.org/kaniblu/hangul-utils.svg?branch=master
+  [2]: https://travis-ci.org/kaniblu/hangul-utils
+  [3]: https://en.wikipedia.org/wiki/Agglutinative_language
+  [4]: https://en.wikipedia.org/wiki/Korean_language_and_computers#Hangul_in_Unicode
+  [5]: https://en.wikipedia.org/wiki/Hangul_consonant_and_vowel_tables#Initials
+  [6]: https://en.wikipedia.org/wiki/Hangul_consonant_and_vowel_tables#Finals
