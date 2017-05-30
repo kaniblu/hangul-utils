@@ -22,13 +22,13 @@ First, run `install_mecab_ko.sh` with administrative privilege to install Mecab-
 
 The script above will set that for you, but you must set it yourself after a restart.
 
-Then run `setup.py install` or install from pypi repository.
+Then run `setup.py install`.
 
     # install from source
     python setup.py install
-
-    # install from pypi
-    pip install hangul-utils
+    
+Optionally, you could install the package from pypi, but it is not recommended,
+as some of the required packages must be installed from git repository.
 
 ## Text Normalization
 
