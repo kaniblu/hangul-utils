@@ -14,7 +14,7 @@ This simple library has following features.
 ## Getting Started
 
 For text normalization, [Open Korean Text](https://github.com/twitter/twitter-korean-text) is required. For tokenizations, [Mecab-ko](https://bitbucket.org/eunjeon/mecab-ko) is required.
-First, run `install_mecab_ko.sh` with administrative privilege to install Mecab-ko system-wide.
+First, run `install_mecab_ko.sh` with sudo to install Mecab-ko system-wide.
 
     sudo bash install_mecab_ko.sh
 
@@ -22,13 +22,19 @@ First, run `install_mecab_ko.sh` with administrative privilege to install Mecab-
 
 The script above will set that for you, but you must set it yourself after a restart.
 
-Then run `setup.py install`.
+Then install Open Korean Text Python Wrapper by running
+
+    bash install_twkorean.sh
+    
+Sudo is not required for this one.
+
+Finally install `hangul-utils` package by cloning this repo and running
 
     # install from source
     python setup.py install
     
 Optionally, you could install the package from pypi, but it is not recommended,
-as some of the required packages must be installed from git repository.
+as some of the required packages install properly only when installed from git repositories.
 
 ## Text Normalization
 
