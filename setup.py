@@ -41,13 +41,9 @@ setup(
     ],
     install_requires=[
         "six",
-        "twkorean>=0.1.5",
         "mecab-python==0.996-ko-0.9.2"
     ],
     dependency_links=[
-        "git+https://github.com/open-korean-text/"
-        "open-korean-text-wrapper-python#"
-        "egg=twkorean-0.1.5",
         "git+https://bitbucket.org/eunjeon/"
         "mecab-python-0.996#egg=mecab-python-0.996-ko-0.9.2"
     ]
