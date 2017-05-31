@@ -41,8 +41,8 @@ setup(
     ],
     install_requires=[
         "six",
-        "jpype1;python_version=='2'",
-        "jpype1-py3;python_version=='3'",
+        "jpype1;python_version<='2.7'",
+        "jpype1-py3;python_version>='3.5'",
         "mecab-python==0.996-ko-0.9.2"
     ],
     dependency_links=[
