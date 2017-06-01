@@ -11,6 +11,8 @@ This simple library has following features.
  * Character Manipulation: splitting and combining of jamo characters (our
  own implementation)
 
+Python 2 is no longer supported.
+
 ## Getting Started
 
 For text normalization, [Open Korean Text](https://github.com/twitter/twitter-korean-text) is required. For tokenizations, [Mecab-ko](https://bitbucket.org/eunjeon/mecab-ko) is required.
