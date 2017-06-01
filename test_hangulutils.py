@@ -307,9 +307,9 @@ def test_morph_tokenize():
 
 def test_sent_word_tokenize():
     ret = sent_word_tokenize(SENT)
-    assert list_compare(ret, SENT_SENT_WORDS)
+    assert all(list_compare(a, b) for a, b in zip(ret, SENT_SENT_WORDS))
 
 
 def test_sent_morph_tokenize():
     ret = sent_morph_tokenize(SENT)
-    assert list_compare(ret, SENT_SENT_MORPHS)
+    assert all(list_compare(a, b) for a, b in zip(ret, SENT_SENT_MORPHS))
