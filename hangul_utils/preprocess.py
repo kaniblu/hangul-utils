@@ -64,6 +64,48 @@ class Preprocessor(object):
 
         return self._twitter.normalize(text)
 
+    def word_tokenize(self, text):
+        """Tokenize a text into space-separated words.
+          
+        This is the most basic form of tokenization, where we do not wish to
+        analyze morphology of each individual word. 
+        
+        Arguments:
+            text: text string.
+            
+        Returns:
+            Generator for a list of space-tokenized words.
+        """
+        self._init_mecab()
+
+        tokens = text.split()
+        tokens_it = iter(tokens)
+
+        try:
+            token = next(tokens_it)
+            index = 0
+
+            for f, pos in self._mecab.parse(text):
+
+                if index >= len(token):
+                    yield token
+                    token = next(tokens_it)
+                    index = 0
+
+                assert token[index:index + len(f)] == f
+
+                if pos.startswith("S") and index:
+                    t, token = token[:index], token[index:]
+                    yield t
+
+                index += len(f)
+
+            if token and index:
+                yield token[:index]
+
+        except StopIteration:
+            pass
+
     def sent_tokenize(self, text, residual=True):
         """Tokenize a bulk of text into list of sentences (using Mecab-ko).
         
@@ -96,16 +138,16 @@ class Preprocessor(object):
 
             yield sent
 
-    def word_tokenize(self, text, pos=False):
-        """Tokenize a sentence into word tokens (using Mecab-ko).
+    def morph_tokenize(self, text, pos=False):
+        """Tokenize a sentence into morpheme tokens (using Mecab-ko).
         
         Arguments:
             text: sentence string.
             pos: whether to include part-of-speech tags.
             
         Returns:
-            If pos is False, then a list generator of word strings is returned. 
-            Otherwise, a list generator of word and pos tuples is returned.
+            If pos is False, then a generator of morphemes is returned. 
+            Otherwise, a generator of morpheme and pos tuples is returned.
         """
         self._init_mecab()
 
@@ -116,20 +158,20 @@ class Preprocessor(object):
             for f, _ in self._mecab.parse(text):
                 yield f
 
-    def sent_word_tokenize(self, text, residual=True, pos=False):
+    def sent_morph_tokenize(self, text, residual=True, pos=False):
         """Tokenize a bulk of text into list of sentences (using Mecab-ko).
-        
-        Each sentence is a list of words. This is slightly more efficient than
-        tokenizing text into sents and words in succession.
-        
+
+        Each sentence is a list of morphemes. This is slightly more efficient than
+        tokenizing text into sents and morphemes in succession.
+
         Arguments:
             text: text string.
             residual: whether to include an incomplete sentence at the end of
                 the text.
             pos: whether to include part-of-speech tag.
         Returns:
-            If pos is False, then a list generator of word lists is returned. 
-            Otherwise, a list generator of word and pos tuples list is returned.
+            If pos is False, then a generator of morphemes list is returned. 
+            Otherwise, a generator of morpheme and pos tuples list is returned.
         """
         self._init_mecab()
 
@@ -148,6 +190,62 @@ class Preprocessor(object):
         if residual and sent:
             yield sent
 
+    def sent_word_tokenize(self, text, residual=True):
+        """Tokenize a bulk of text into list of sentences (using Mecab-ko).
+
+        Each sentence is a list of words. This is slightly more efficient than
+        tokenizing text into sents and words in succession.
+
+        Arguments:
+            text: text string.
+            residual: whether to include an incomplete sentence at the end of
+                the text.
+        Returns:
+            A generator of words list. 
+        """
+        self._init_mecab()
+
+        sent = []
+        tokens = text.split()
+        tokens_it = iter(tokens)
+
+        try:
+            token = next(tokens_it)
+            index = 0
+            yield_sent = False
+
+            for f, pos in self._mecab.parse(text):
+
+                if index >= len(token):
+                    sent.append(token)
+                    token = next(tokens_it)
+                    index = 0
+
+                    if yield_sent:
+                        yield sent
+                        yield_sent = False
+                        sent = []
+
+                assert token[index:index + len(f)] == f
+
+                if pos.startswith("S") and index:
+                    t, token = token[:index], token[index:]
+                    sent.append(t)
+
+                    if pos == "SF":
+                        yield_sent = True
+
+                index += len(f)
+
+            if token and index:
+                sent.append(token[:index])
+
+            if sent and (yield_sent or residual):
+                yield sent
+
+        except StopIteration:
+            pass
+
 
 def normalize(text, *args, **kwargs):
     global _preprocessor
@@ -156,6 +254,15 @@ def normalize(text, *args, **kwargs):
         _preprocessor = Preprocessor()
 
     return _preprocessor.normalize(text, *args, **kwargs)
+
+
+def morph_tokenize(text, *args, **kwargs):
+    global _preprocessor
+
+    if _preprocessor is None:
+        _preprocessor = Preprocessor()
+
+    return _preprocessor.morph_tokenize(text, *args, **kwargs)
 
 
 def sent_tokenize(text, *args, **kwargs):
@@ -185,7 +292,18 @@ def sent_word_tokenize(text, *args, **kwargs):
     return _preprocessor.sent_word_tokenize(text, *args, **kwargs)
 
 
+def sent_morph_tokenize(text, *args, **kwargs):
+    global _preprocessor
+
+    if _preprocessor is None:
+        _preprocessor = Preprocessor()
+
+    return _preprocessor.sent_morph_tokenize(text, *args, **kwargs)
+
+
 functools.update_wrapper(normalize, Preprocessor.normalize)
 functools.update_wrapper(sent_tokenize, Preprocessor.sent_tokenize)
+functools.update_wrapper(morph_tokenize, Preprocessor.morph_tokenize)
 functools.update_wrapper(word_tokenize, Preprocessor.word_tokenize)
 functools.update_wrapper(sent_word_tokenize, Preprocessor.sent_word_tokenize)
+functools.update_wrapper(sent_morph_tokenize, Preprocessor.sent_morph_tokenize)

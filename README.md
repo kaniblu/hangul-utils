@@ -125,16 +125,22 @@ Sentence tokenization:
     >>> list(sent_tokenize("그러나 베네수엘라는 독일 보다 한 단계 위였다. 현 시점에서 눈에 띄는 선수가 몇몇 있다."))
     ['그러나 베네수엘라는 독일 보다 한 단계 위였다.', '현 시점에서 눈에 띄는 선수가 몇몇 있다.']
 
-Word tokenization:
+Word tokenization (mainly using space):
 
     >>> from hangul_utils import word_tokenize
     >>> list(word_tokenize("그러나 베네수엘라는 독일 보다 한 단계 위였다."))
+    ['그러나', '베네수엘라는', '독일', '보다', '한', '단계', '위였다', '.']
+
+Morpheme tokenization:
+
+    >>> from hangul_utils import morph_tokenize
+    >>> list(morph_tokenize("그러나 베네수엘라는 독일 보다 한 단계 위였다."))
     ['그러나', '베네수엘라', '는', '독일', '보다', '한', '단계', '위', '였', '다', '.']
 
-Word tokenization with POS:
+Morpheme tokenization with POS:
 
-    >>> from hangul_utils import word_tokenize
-    >>> list(word_tokenize("그러나 베네수엘라는 독일 보다 한 단계 위였다.", pos=True))
+    >>> from hangul_utils import morph_tokenize
+    >>> list(morph_tokenize("그러나 베네수엘라는 독일 보다 한 단계 위였다.", pos=True))
     [('현', 'MM'),
      ('시점', 'NNG'),
      ('에서', 'JKB'),
@@ -149,10 +155,17 @@ Word tokenization with POS:
      ('다', 'EF'),
      ('.', 'SF')]
 
-Sentence and word tokenization simultaneously (more efficient than calling them separately):
+Simultaneous sentence and word tokenization (more efficient than calling each of them in succession):
 
     >>> from hangul_utils import sent_word_tokenize
     >>> list(sent_word_tokenize("그러나 베네수엘라는 독일 보다 한 단계 위였다. 현 시점에서 눈에 띄는 선수가 몇몇 있다."))
+    [['그러나', '베네수엘라는', '독일', '보다', '한', '단계', '위였다', '.'],
+    ['현', '시점에서', '눈에', '띄는', '선수가', '몇몇', '있다', '.']]
+
+Simultaneous sentence and morpheme tokenization (more efficient than calling each of them in succession):
+
+    >>> from hangul_utils import sent_morph_tokenize
+    >>> list(sent_morph_tokenize("그러나 베네수엘라는 독일 보다 한 단계 위였다. 현 시점에서 눈에 띄는 선수가 몇몇 있다."))
     [['그러나', '베네수엘라', '는', '독일', '보다', '한', '단계', '위', '였', '다', '.'],
     ['현', '시점', '에서', '눈', '에', '띄', '는', '선수', '가', '몇몇', '있', '다', '.']]
 
