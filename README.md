@@ -22,7 +22,7 @@ First, run `install_mecab_ko.sh` with sudo to install Mecab-ko system-wide.
 
 **Note that `LD_LIBRARY_PATH` must be set to point to `/usr/local/lib:/usr/lib`** 
 
-The script above will set that for you, but you must set it yourself after a restart.
+The script above will set that for you temporarily, but you must set it yourself after a restart.
 
 Then install Open Korean Text Python Wrapper by running
 
