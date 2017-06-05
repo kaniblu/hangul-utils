@@ -88,17 +88,34 @@ class Preprocessor(object):
             for f, pos in self._mecab.parse(text):
 
                 if index >= len(token):
-                    yield token
+                    if token:
+                        yield token
+
                     token = next(tokens_it)
                     index = 0
 
-                assert token[index:index + len(f)] == f
+                # token_f = token[index:index + len(f)]
+                # if token_f != f:
+                #     print(token, index, token_f, f)
 
-                if pos.startswith("S") and index:
-                    t, token = token[:index], token[index:]
-                    yield t
+                if pos.startswith("S"):
+                    if index:
+                        t, token = token[:index], token[index:]
 
-                index += len(f)
+                        if t:
+                            yield t
+
+                        index = 0
+
+                    t, token = token[index:index + len(f)], token[
+                                                            index + len(f):]
+
+                    if t:
+                        yield t
+
+                    index = 0
+                else:
+                    index += len(f)
 
             if token and index:
                 yield token[:index]
@@ -217,7 +234,9 @@ class Preprocessor(object):
             for f, pos in self._mecab.parse(text):
 
                 if index >= len(token):
-                    sent.append(token)
+                    if token:
+                        sent.append(token)
+
                     token = next(tokens_it)
                     index = 0
 
@@ -226,16 +245,29 @@ class Preprocessor(object):
                         yield_sent = False
                         sent = []
 
-                assert token[index:index + len(f)] == f
+                # assert token[index:index + len(f)] == f
 
-                if pos.startswith("S") and index:
-                    t, token = token[:index], token[index:]
-                    sent.append(t)
+                if pos.startswith("S"):
+                    if index:
+                        t, token = token[:index], token[index:]
+
+                        if t:
+                            sent.append(t)
+
+                        index = 0
+
+                    t, token = token[index:index + len(f)], token[
+                                                            index + len(f):]
+
+                    if t:
+                        sent.append(t)
+
+                    index = 0
 
                     if pos == "SF":
                         yield_sent = True
-
-                index += len(f)
+                else:
+                    index += len(f)
 
             if token and index:
                 sent.append(token[:index])

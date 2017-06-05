@@ -11,6 +11,15 @@ CHAR = "안"
 SENT = "앞 집 팥죽은 붉은 팥 풋팥죽이고, 뒷집 콩죽은 햇콩 단콩 콩죽. " \
        "우리 집 깨죽은 검은 깨 깨죽인데 사람들은 햇콩 단콩 콩죽 깨죽 " \
        "죽먹기를 싫어하더라."
+SENT2 = "KT향 단말기의 경우 SKT 유심 인식 이력이 있어야 합니다. 주변의 SKT 사용 " \
+        "고객의 유심, 혹은 가까운 SKT 매장의 유심을 고객님의 핸드폰에 꽂은 후 2-3번 " \
+        "정도 껐다 킨 다음 유심을 꽂아주세요!"
+
+SENT2_WORDS = ['KT', '향', '단말기의', '경우', 'SKT', '유심', '인식', '이력이',
+               '있어야', '합니다', '.', '주변의', 'SKT', '사용', '고객의', '유심',
+               ',', '혹은', '가까운', 'SKT', '매장의', '유심을', '고객님의',
+               '핸드폰에', '꽂은', '후', '2', '-', '3', '번', '정도', '껐다',
+               '킨', '다음', '유심을', '꽂아주세요', '!']
 
 SENT_WORDS = [
     '앞',
@@ -294,7 +303,10 @@ def test_sent_tokenize():
 
 def test_word_tokenize():
     ret = word_tokenize(SENT)
+    ret2 = word_tokenize(SENT2)
+
     assert list_compare(ret, SENT_WORDS)
+    assert list_compare(ret2, SENT2_WORDS)
 
 
 def test_morph_tokenize():
