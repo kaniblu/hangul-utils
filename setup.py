@@ -1,6 +1,6 @@
 from setuptools import setup
 
-__VERSION__ = "0.3.1.1"
+__VERSION__ = "0.3.2.1"
 
 setup(
     name='hangul-utils',
@@ -40,6 +40,7 @@ setup(
         "korean character",
     ],
     install_requires=[
+        "tqdm",
         "six",
         "jpype1;python_version<='2.7'",
         "jpype1-py3;python_version>='3.5'",
