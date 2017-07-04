@@ -31,7 +31,7 @@ def main():
     assert os.path.exists(args.input_path)
 
     try:
-        os.makedirs(os.path.basename(args.output_path))
+        os.makedirs(os.path.dirname(args.output_path))
     except:
         pass
 
