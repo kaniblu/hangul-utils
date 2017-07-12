@@ -57,10 +57,10 @@ def main():
                     if args.word_tokenize:
                         sent = " ".join(word_tokenize(sent))
                     elif args.morph_tokenize:
-			if args.morph_tags:
-	                    sent = " ".join("/".join(w) for w in morph_tokenize(sent, pos=True))
-			else:
-			    sent = " ".join(w for w in morph_tokenize(sent))
+                        if args.morph_tags:
+                            sent = " ".join("/".join(w) for w in morph_tokenize(sent, pos=True))
+                        else:
+                            sent = " ".join(w for w in morph_tokenize(sent))
 
                     if args.split_syllables:
                         sent = split_syllables(sent)
