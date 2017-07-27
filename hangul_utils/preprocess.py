@@ -19,7 +19,7 @@ class _Mecab(object):
         nodes = self._tagger.parseToNode(text)
 
         while nodes:
-            form = nodes.surface
+            form = nodes.surface.strip()
             pos = nodes.feature.split(",")[0]
             nodes = nodes.next
 
