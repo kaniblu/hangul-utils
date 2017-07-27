@@ -17,13 +17,16 @@ def main():
     me_group = parser.add_mutually_exclusive_group()
     me_group.add_argument("--word_tokenize", action="store_true", default=False)
     me_group.add_argument("--morph_tokenize", action="store_true", default=False)
+    me_group.add_argument("--tag_tokenize", action="store_true", default=False,
+                          help="tokenizing method is identical to `morph_tokenize`, "
+                               "except that only pos tags are used.")
 
     me_group = parser.add_mutually_exclusive_group()
     me_group.add_argument("--split_syllables", action="store_true", default=False)
     me_group.add_argument("--join_jamos", action="store_true", default=False)
 
     parser.add_argument("--morph_tags", action="store_true", default=False,
-                        help="whether to include morphology tags "
+                        help="whether to include morphology tags (delimited by /)"
                              "if morph_tokenize == True")
 
     args = parser.parse_args()
@@ -61,6 +64,8 @@ def main():
                             sent = " ".join("/".join(w) for w in morph_tokenize(sent, pos=True))
                         else:
                             sent = " ".join(w for w in morph_tokenize(sent))
+                    elif args.tag_tokenize:
+                        sent = " ".join(w[1] for w in morph_tokenize(sent, pos=True))
 
                     if args.split_syllables:
                         sent = split_syllables(sent)
