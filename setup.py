@@ -1,6 +1,6 @@
 from setuptools import setup
 
-__VERSION__ = "0.3.2.2"
+__VERSION__ = "0.3.2.3"
 
 setup(
     name='hangul-utils',
