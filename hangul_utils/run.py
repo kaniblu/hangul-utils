@@ -1,4 +1,5 @@
 import os
+import sys
 import argparse
 import itertools
 import multiprocessing.pool as mp
@@ -26,15 +27,11 @@ def process(texts):
                 sent = normalize(sent)
 
             if args.word_tokenize:
-                sent = " ".join(word_tokenize(sent))
+                sent = args.delimiter.join(word_tokenize(sent))
             elif args.morph_tokenize:
-                if args.morph_tags:
-                    sent = " ".join(
-                        "/".join(w) for w in morph_tokenize(sent, pos=True))
-                else:
-                    sent = " ".join(w for w in morph_tokenize(sent))
+                sent = args.delimiter.join(morph_tokenize(sent, pos=False))
             elif args.tag_tokenize:
-                sent = " ".join(w[1] for w in morph_tokenize(sent, pos=True))
+                sent = args.delimiter.join(p for _, p in morph_tokenize(sent, pos=True))
 
             if args.split_syllables:
                 sent = split_syllables(sent)
@@ -106,44 +103,49 @@ def process_mp(texts, args, pool=None):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input_path", type=str, required=True)
-    parser.add_argument("--output_path", type=str, required=True)
+    parser.add_argument("-I", "--input", type=str, default=None, dest="input_path",
+                        help="if specified, text is load from the input path. "
+                             "Otherwise, it is load from stdin.")
+    parser.add_argument("-O", "--output", type=str, default=None, dest="output_path",
+                        help="if specified, output is written to the output path. "
+                             "Otherwise, it is written to stdout.")
     parser.add_argument("--progress", action="store_true", default=False)
     parser.add_argument("--n_processes", type=int, default=1)
-    parser.add_argument("--sent_tokenize", action="store_true", default=False)
-    parser.add_argument("--normalize", action="store_true", default=False)
+    parser.add_argument("-s", "--sent", action="store_true", default=False, dest="sent_tokenize")
+    parser.add_argument("-n", "--norm", action="store_true", default=False, dest="normalize")
 
     me_group = parser.add_mutually_exclusive_group()
-    me_group.add_argument("--word_tokenize", action="store_true", default=False)
-    me_group.add_argument("--morph_tokenize", action="store_true", default=False)
-    me_group.add_argument("--tag_tokenize", action="store_true", default=False,
+    me_group.add_argument("-w", "--word", action="store_true", default=False, dest="word_tokenize")
+    me_group.add_argument("-m", "--morph", action="store_true", default=False, dest="morph_tokenize")
+    me_group.add_argument("-t", "--tag", action="store_true", default=False, dest="tag_tokenize",
                           help="tokenizing method is identical to `morph_tokenize`, "
-                               "except that only pos tags are used.")
+                               "except that only pos tags are produced.")
 
     me_group = parser.add_mutually_exclusive_group()
-    me_group.add_argument("--split_syllables", action="store_true", default=False)
-    me_group.add_argument("--join_jamos", action="store_true", default=False)
-
-    parser.add_argument("--morph_tags", action="store_true", default=False,
-                        help="whether to include morphology tags (delimited by /)"
-                             "if morph_tokenize == True")
+    me_group.add_argument("-p", "--split", action="store_true", default=False, dest="split_syllables")
+    me_group.add_argument("-j", "--join", action="store_true", default=False, dest="join_jamos")
 
     args = parser.parse_args()
-
-    assert os.path.exists(args.input_path)
 
     try:
         os.makedirs(os.path.dirname(args.output_path))
     except:
         pass
 
-    with open(args.input_path, "r") as f:
-        results = process_mp(f, args)
+    if args.input_path is not None:
+        in_stream = open(args.input_path, "r")
+    else:
+        in_stream = sys.stdin
 
-    with open(args.output_path, "w") as f:
-        for r in results:
-            f.write(r)
-            f.write("\n")
+    if args.output_path is not None:
+        out_stream = open(args.output_path, "w")
+    else:
+        out_stream = sys.stdout
+
+    results = process_mp(in_stream, args)
+    for r in results:
+        out_stream.write(r)
+        out_stream.write("\n")
 
 
 if __name__ == '__main__':
