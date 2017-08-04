@@ -111,6 +111,7 @@ def main():
                              "Otherwise, it is written to stdout.")
     parser.add_argument("--progress", action="store_true", default=False)
     parser.add_argument("--n_processes", type=int, default=1)
+    parser.add_argument("-d", "--delimiter", type=str, default=" ")
     parser.add_argument("-s", "--sent", action="store_true", default=False, dest="sent_tokenize")
     parser.add_argument("-n", "--norm", action="store_true", default=False, dest="normalize")
 
