@@ -118,6 +118,12 @@ def split_syllable_char(c):
             final -= 1
     else:
         pos = get_jamo_type(c)
+	if pos & INITIAL == INITIAL:
+            pos = INITIAL
+        elif pos & MEDIAL == MEDIAL:
+            pos = MEDIAL
+        elif pos & FINAL == FINAL:
+            pos = FINAL
         idx = CHAR_INDICES[pos][c]
         if pos == INITIAL:
             init = idx
