@@ -118,7 +118,7 @@ def split_syllable_char(c):
             final -= 1
     else:
         pos = get_jamo_type(c)
-	if pos & INITIAL == INITIAL:
+        if pos & INITIAL == INITIAL:
             pos = INITIAL
         elif pos & MEDIAL == MEDIAL:
             pos = MEDIAL
