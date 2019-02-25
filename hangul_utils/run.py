@@ -4,8 +4,6 @@ import argparse
 import itertools
 import multiprocessing.pool as mp
 
-import tqdm
-
 from hangul_utils import *
 
 
@@ -78,6 +76,7 @@ def process_mp(texts, args, pool=None):
                       k=args.n_processes * 1000)
 
     if args.progress:
+        import tqdm
         t = tqdm.tqdm()
     else:
         t = None
