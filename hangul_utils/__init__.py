@@ -1,3 +1,5 @@
+__version__ = "0.3.3"
+
 from .unicode import CHAR_INITIALS, CHAR_MEDIALS, CHAR_FINALS
 from .unicode import join_jamos
 from .unicode import join_jamos_char
@@ -11,3 +13,4 @@ from .preprocess import normalize
 from .preprocess import sent_word_tokenize
 from .preprocess import sent_morph_tokenize
 from .preprocess import Preprocessor
+

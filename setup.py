@@ -1,10 +1,9 @@
 from setuptools import setup
 
-__VERSION__ = "0.3.2.5"
 
 setup(
     name='hangul-utils',
-    version=__VERSION__,
+    version="0.3.3",
     license="GPL",
     description='An integrated library for Korean preprocessing.',
     author='Kang Min Yoo',
