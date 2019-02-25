@@ -2,14 +2,17 @@
 
 import functools
 
-import MeCab
-import twkorean
-
 _preprocessor = None
 
 
 class _Mecab(object):
     def __init__(self, dic_path):
+        try:
+            import MeCab
+        except ImportError:
+            raise ImportError("could not import `MeCab`; make sure that "
+                              "`mecab-python` is installed by running "
+                              "`install_mceab_ko.sh` in the repository. ")
         self._dic_path = dic_path
         self._tagger = MeCab.Tagger("-d {}".format(
             dic_path
@@ -48,7 +51,12 @@ class Preprocessor(object):
     def _init_twitter(self):
         if self._twitter is not None:
             return
-
+        try:
+            import twkorean
+        except ImportError:
+            raise ImportError("could not import `twkorean`; make sure that "
+                              "the package is installed by running "
+                              "`install_twkorean.sh` in the repository. ")
         self._twitter = twkorean.TwitterKoreanProcessor()
 
     def normalize(self, text):
