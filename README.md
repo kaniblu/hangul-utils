@@ -226,8 +226,8 @@ is require.
     >>> print(sentence == sentence2)
     True
     
-  [1]: https://travis-ci.org/kaniblu/hangul-utils.svg?branch=master
-  [2]: https://travis-ci.org/kaniblu/hangul-utils
+  [1]: https://travis-ci.com/kaniblu/hangul-utils.svg?branch=master
+  [2]: https://travis-ci.com/kaniblu/hangul-utils
   [3]: https://en.wikipedia.org/wiki/Agglutinative_language
   [4]: https://en.wikipedia.org/wiki/Korean_language_and_computers#Hangul_in_Unicode
   [5]: https://en.wikipedia.org/wiki/Hangul_consonant_and_vowel_tables#Initials
