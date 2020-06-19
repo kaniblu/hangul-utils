@@ -46,7 +46,7 @@ class Preprocessor(object):
         try:
             _ = list(self._mecab.parse("mecab mecab"))
             del _
-        except UnicodeEncodeError:
+        except UnicodeDecodeError:
             pass
 
     def _init_twitter(self):
