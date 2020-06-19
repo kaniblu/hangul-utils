@@ -78,8 +78,8 @@ def main():
             num_lines = sum(1 for _ in f)
     in_stream = (open(args.input_path, "r")
                  if args.input_path is not None else sys.stdin)
-    out_stream = (open(args.output_path, "w")
-                  if args.output_path is not None else sys.stdout)
+    out_stream = (open(args.output_path, "wb")
+                  if args.output_path is not None else sys.stdout.buffer)
     desc = "processing text"
     tqdm_kwargs = dict(unit="lines", desc="processing text")
     if num_lines is not None:
@@ -102,8 +102,8 @@ def main():
             tqdm_kwargs=tqdm_kwargs
         )
     for line in it:
-        out_stream.write(line)
-        out_stream.write("\n")
+        out_stream.write(line.encode("utf-8", "surrogatepass"))
+        out_stream.write(b"\n")
 
 
 if __name__ == '__main__':

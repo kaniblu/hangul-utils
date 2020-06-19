@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='hangul-utils',
-    version="0.4.4",
+    version="0.4.5",
     license="GPL",
     description='An integrated library for Korean preprocessing.',
     author='Kang Min Yoo',
