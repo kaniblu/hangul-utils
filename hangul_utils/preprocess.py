@@ -1,4 +1,5 @@
-# encoding: utf-8
+__all__ = ["Preprocessor", "normalize", "word_tokenize", "sent_tokenize",
+           "morph_tokenize", "sent_word_tokenize", "sent_morph_tokenize"]
 
 import functools
 
@@ -38,19 +39,17 @@ class Preprocessor(object):
         self._twitter = None
 
     def _init_mecab(self):
-        if self._mecab is not None:
-            return
-
         self._mecab = _Mecab("/usr/local/lib/mecab/dic/mecab-ko-dic")
 
         # Run a test to sacrifice two words
         # There is a bug in mecab that makes it omit first two words.
-        _ = list(self._mecab.parse("foo bar"))
-        del _
+        try:
+            _ = list(self._mecab.parse("mecab mecab"))
+            del _
+        except UnicodeEncodeError:
+            pass
 
     def _init_twitter(self):
-        if self._twitter is not None:
-            return
         try:
             import twkorean
         except ImportError:
@@ -68,7 +67,8 @@ class Preprocessor(object):
         Returns:
             Normalized text string.
         """
-        self._init_twitter()
+        if self._twitter is None:
+            self._init_twitter()
 
         return self._twitter.normalize(text)
 
@@ -84,7 +84,8 @@ class Preprocessor(object):
         Returns:
             Generator for a list of space-tokenized words.
         """
-        self._init_mecab()
+        if self._mecab is None:
+            self._init_mecab()
 
         tokens = text.split()
         tokens_it = iter(tokens)

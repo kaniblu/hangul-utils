@@ -1,4 +1,6 @@
-# encoding: UTF-8
+__all__ = ["split_syllable_char", "split_syllables",
+           "join_jamos", "join_jamos_char",
+           "CHAR_INITIALS", "CHAR_MEDIALS", "CHAR_FINALS"]
 
 import itertools
 
@@ -166,7 +168,7 @@ def split_syllables(s, ignore_err=True, pad=None):
             return split_syllable_char(c)
         except ValueError:
             if ignore_err:
-                return (c, )
+                return (c,)
             raise ValueError(f"encountered an unsupported character: "
                              f"{c} (0x{ord(c):x})")
 

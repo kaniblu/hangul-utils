@@ -20,7 +20,7 @@ mkdir -p $MECAB_PATH
 tar zxvf $MECAB_PATH.tar.gz -C $MECAB_PATH
 cd $MECAB_PATH/*
 ./configure
-make install -j4
+sudo make install -j4
 
 # automake
 if ! command_exists automake || [ $(automake --version | grep automake | rev | cut -d ' ' -f 1 | rev) != "$AUTOMAKE_VERSION" ]
@@ -31,7 +31,7 @@ then
     tar zxvf $AUTOMAKE_PATH.tar.gz -C $AUTOMAKE_PATH
     cd $AUTOMAKE_PATH/automake-${AUTOMAKE_VERSION}
     ./configure
-    make install -j4
+    sudo make install -j4
 fi
 
 # mecab-ko-dic
@@ -43,6 +43,6 @@ cd $MECAB_DIC_PATH/mecab*
 ./autogen.sh
 ./configure
 echo "dicdir=${MECAB_DIC_DICDIR}" > /usr/local/etc/mecabrc
-make install -j4
+sudo make install -j4
 
 

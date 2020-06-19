@@ -1,9 +1,8 @@
 from setuptools import setup
 
-
 setup(
     name='hangul-utils',
-    version="0.3.3",
+    version="0.4",
     license="GPL",
     description='An integrated library for Korean preprocessing.',
     author='Kang Min Yoo',
@@ -43,10 +42,16 @@ setup(
         "six",
         "jpype1;python_version<='2.7'",
         "jpype1-py3;python_version>='3.5'",
-        "mecab-python==0.996-ko-0.9.2"
+        "mecab-python==0.996-ko-0.9.2",
+        "map-async==1.1"
     ],
     dependency_links=[
         "git+https://bitbucket.org/eunjeon/"
         "mecab-python-0.996#egg=mecab-python-0.996-ko-0.9.2"
-    ]
+    ],
+    entry_points={
+        "console_scripts": [
+            "hangul-process = hangul_utils.run:main"
+        ]
+    }
 )
