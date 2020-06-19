@@ -92,7 +92,8 @@ def main():
             desc=desc
         )
     for line in it:
-        out_stream.write(f"{line}\n")
+        out_stream.write(line)
+        out_stream.write("\n")
 
 
 if __name__ == '__main__':
