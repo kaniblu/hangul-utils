@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='hangul-utils',
-    version="0.4.3",
+    version="0.4.4",
     license="GPL",
     description='An integrated library for Korean preprocessing.',
     author='Kang Min Yoo',
@@ -43,7 +43,7 @@ setup(
         "jpype1;python_version<='2.7'",
         "jpype1-py3;python_version>='3.5'",
         "mecab-python==0.996-ko-0.9.2",
-        "map-async>=1.2.1"
+        "map-async>=1.2.3"
     ],
     dependency_links=[
         "git+https://bitbucket.org/eunjeon/"

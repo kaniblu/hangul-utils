@@ -41,6 +41,9 @@ def main():
                         help="Whether to display the progress bar using tqdm.")
     parser.add_argument("--processes", type=int, default=1,
                         help="Number of processes to utilize.")
+    parser.add_argument("--skip-count", action="store_true", default=False,
+                        help="If enabled, the number of lines will not be "
+                             "pre-calculated before iterating the file content.")
     parser.add_argument("-d", "--delimiter", type=str, default=" ",
                         help="The delimiting character to use for splitting "
                              "text into tokens.")
@@ -69,18 +72,24 @@ def main():
     group.add_argument("-j", "--join-jamos", action="store_true", default=False,
                        help="Joins jamos into syllables whenever possible.")
     args = parser.parse_args()
+    num_lines = None
+    if args.input_path is not None and args.progress and not args.skip_count:
+        with open(args.input_path, "rb") as f:
+            num_lines = sum(1 for _ in f)
     in_stream = (open(args.input_path, "r")
                  if args.input_path is not None else sys.stdin)
     out_stream = (open(args.output_path, "w")
                   if args.output_path is not None else sys.stdout)
     desc = "processing text"
+    tqdm_kwargs = dict(unit="lines", desc="processing text")
+    if num_lines is not None:
+        tqdm_kwargs["total"] = num_lines
     if args.processes == 1:
         it = itertools.starmap(
             process,
             tqdm.tqdm(
                 iterable=zip(itertools.repeat(args), in_stream),
-                disable=not args.progress,
-                desc=desc
+                disable=not args.progress, **tqdm_kwargs
             )
         )
     else:
@@ -89,7 +98,8 @@ def main():
             iterable=zip(itertools.repeat(args), in_stream),
             processes=args.processes,
             show_progress=args.progress,
-            desc=desc
+            desc=desc,
+            tqdm_kwargs=tqdm_kwargs
         )
     for line in it:
         out_stream.write(line)
