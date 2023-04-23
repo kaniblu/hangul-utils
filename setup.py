@@ -42,7 +42,7 @@ setup(
         "six",
         "jpype1;python_version<='2.7'",
         "jpype1-py3;python_version>='3.5'",
-        "mecab-python==0.996-ko-0.9.2",
+        "mecab-ko==1.0.1",
         "map-async>=1.2.3"
     ],
     dependency_links=[
